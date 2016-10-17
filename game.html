@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        function f(){
+            var boo1 = true;
+            var boo = true;
+            var dijige = 0;
+            for(var i = 0 ; i < 9 ; i++ ){
+                for(var j = 0 ; j < 9 ; j++ ){
+                    var d = document.createElement("DIV");
+                    document.getElementById("contents").appendChild(d);
+                    d.style.height="100px";
+                    d.style.width="100px";
+                    d.style.float="left";
+                    d.ah = 0;
+                    d.as = 0;
+                    d.yx = 0;
+                    d.zx = 0;
+                    d.ahb = 0;
+                    d.asb = 0;
+                    d.yxb = 0;
+                    d.zxb = 0;
+                    d.diji =dijige;
+                    dijige++;
+                    d.onclick = function() {
+                        if (boo1) {
+                            if (boo) {
+                                if (this.innerHTML == "") {
+                                    this.innerHTML = "<img src='game/black.gif'/>";
+                                    boo = !boo;
+                                    document.getElementById("turn").innerHTML="下一子：白";
+                                    //横着五个
+                                    this.ah = this.previousSibling.ah + this.nextSibling.ah + 1;
+                                    if (this.previousSibling.ah !== 0) {
+                                        this.previousSibling.ah = this.ah;
+                                        if (this.previousSibling.previousSibling.ah !== 0) {
+                                            this.previousSibling.previousSibling.ah = this.ah;
+                                        }
+                                    }
+                                    if (this.nextSibling.ah !== 0) {
+                                        this.nextSibling.ah = this.ah;
+                                        if (this.nextSibling.nextSibling.ah !== 0) {
+                                            this.nextSibling.nextSibling.ah = this.ah;
+                                        }
+                                    }
+                                    //竖着五个
+                                    function shang1(t) {
+                                        return (t.parentNode.childNodes[t.diji - 8]);
+                                    }
+
+                                    function shang2(t) {
+                                        return (t.parentNode.childNodes[t.diji - 17]);
+                                    }
+
+                                    function xia1(t) {
+                                        return (t.parentNode.childNodes[t.diji + 10]);
+                                    }
+
+                                    function xia2(t) {
+                                        return (t.parentNode.childNodes[t.diji + 19]);
+                                    }
+
+                                    var ss = shang1(this);
+                                    var xx = xia1(this);
+                                    this.as = ss.as + xx.as + 1;
+                                    if (ss.as !== 0) {
+                                        ss.as = this.as;
+                                        if (shang2(this).as !== 0) {
+                                            shang2(this).as = this.as;
+                                        }
+                                    }
+                                    if (xx.as !== 0) {
+                                        xx.as = this.as;
+                                        if (xia2(this).as !== 0) {
+                                            xia2(this).as = this.as;
+                                        }
+                                    }
+
+                                    //右斜五个
+                                    function zuoshang1(t) {
+                                        return (t.parentNode.childNodes[t.diji - 9]);
+                                    }
+
+                                    function zuoshang2(t) {
+                                        return (t.parentNode.childNodes[t.diji - 18]);
+                                    }
+
+                                    function youxia1(t) {
+                                        return (t.parentNode.childNodes[t.diji + 11]);
+                                    }
+
+                                    function youxia2(t) {
+                                        return (t.parentNode.childNodes[t.diji + 20]);
+                                    }
+
+                                    var zzss = zuoshang1(this);
+                                    var yyxx = youxia1(this);
+                                    this.yx = zzss.yx + yyxx.yx + 1;
+                                    if (zzss.yx !== 0) {
+                                        zzss.yx = this.yx;
+                                        if (zuoshang2(this).yx !== 0) {
+                                            zuoshang2(this).yx = this.yx;
+                                        }
+                                    }
+                                    if (yyxx.yx !== 0) {
+                                        yyxx.yx = this.yx;
+                                        if (youxia2(this).yx !== 0) {
+                                            youxia2(this).yx = this.yx;
+                                        }
+                                    }
+
+                                    //左斜五个
+                                    function youshang1(t) {
+                                        return (t.parentNode.childNodes[t.diji - 7]);
+                                    }
+
+                                    function youshang2(t) {
+                                        return (t.parentNode.childNodes[t.diji - 16]);
+                                    }
+
+                                    function zuoxia1(t) {
+                                        return (t.parentNode.childNodes[t.diji + 9]);
+                                    }
+
+                                    function zuoxia2(t) {
+                                        return (t.parentNode.childNodes[t.diji + 18]);
+                                    }
+
+                                    var yyss = youshang1(this);
+                                    var zzxx = zuoxia1(this);
+                                    this.zx = yyss.zx + zzxx.zx + 1;
+                                    if (yyss.zx !== 0) {
+                                        yyss.zx = this.zx;
+                                        if (youshang2(this).zx !== 0) {
+                                            youshang2(this).zx = this.zx;
+                                        }
+                                    }
+                                    if (zzxx.zx !== 0) {
+                                        zzxx.zx = this.zx;
+                                        if (zuoxia2(this).zx !== 0) {
+                                            zuoxia2(this).zx = this.zx;
+                                        }
+                                    }
+
+                                    if (this.ah >= 5 || this.as >= 5 || this.yx >= 5 || this.zx >= 5) {
+                                        alert("黑子赢");
+                                        boo1 = false;
+                                    }
+                                }
+                            } else {
+                                if (this.innerHTML == "") {
+                                    this.innerHTML = "<img src='game/white.gif'/>";
+                                    boo = !boo;
+                                    document.getElementById("turn").innerHTML="下一子：黑";
+                                    //横着五个
+                                    this.ahb = this.previousSibling.ahb + this.nextSibling.ahb + 1;
+                                    if (this.previousSibling.ahb !== 0) {
+                                        this.previousSibling.ahb = this.ahb;
+                                        if (this.previousSibling.previousSibling.ahb !== 0) {
+                                            this.previousSibling.previousSibling.ahb = this.ahb;
+                                        }
+                                    }
+                                    if (this.nextSibling.ahb !== 0) {
+                                        this.nextSibling.ahb = this.ahb;
+                                        if (this.nextSibling.nextSibling.ahb !== 0) {
+                                            this.nextSibling.nextSibling.ahb = this.ahb;
+                                        }
+                                    }
+                                    //竖着五个
+                                    function shang1b(t) {
+                                        return (t.parentNode.childNodes[t.diji - 8]);
+                                    }
+
+                                    function shang2b(t) {
+                                        return (t.parentNode.childNodes[t.diji - 17]);
+                                    }
+
+                                    function xia1b(t) {
+                                        return (t.parentNode.childNodes[t.diji + 10]);
+                                    }
+
+                                    function xia2b(t) {
+                                        return (t.parentNode.childNodes[t.diji + 19]);
+                                    }
+
+                                    var ssb = shang1b(this);
+                                    var xxb = xia1b(this);
+                                    this.asb = ssb.asb + xxb.asb + 1;
+                                    if (ssb.asb !== 0) {
+                                        ssb.asb = this.asb;
+                                        if (shang2b(this).asb !== 0) {
+                                            shang2b(this).asb = this.asb;
+                                        }
+                                    }
+                                    if (xxb.asb !== 0) {
+                                        xxb.asb = this.asb;
+                                        if (xia2b(this).asb !== 0) {
+                                            xia2b(this).asb = this.asb;
+                                        }
+                                    }
+
+                                    //右斜五个
+                                    function zuoshang1b(t) {
+                                        return (t.parentNode.childNodes[t.diji - 9]);
+                                    }
+
+                                    function zuoshang2b(t) {
+                                        return (t.parentNode.childNodes[t.diji - 18]);
+                                    }
+
+                                    function youxia1b(t) {
+                                        return (t.parentNode.childNodes[t.diji + 11]);
+                                    }
+
+                                    function youxia2b(t) {
+                                        return (t.parentNode.childNodes[t.diji + 20]);
+                                    }
+
+                                    var zzssb = zuoshang1b(this);
+                                    var yyxxb = youxia1b(this);
+                                    this.yxb = zzssb.yxb + yyxxb.yxb + 1;
+                                    if (zzssb.yxb !== 0) {
+                                        zzssb.yxb = this.yxb;
+                                        if (zuoshang2b(this).yxb !== 0) {
+                                            zuoshang2b(this).yxb = this.yxb;
+                                        }
+                                    }
+                                    if (yyxxb.yxb !== 0) {
+                                        yyxxb.yxb = this.yxb;
+                                        if (youxia2b(this).yxb !== 0) {
+                                            youxia2b(this).yxb = this.yxb;
+                                        }
+                                    }
+
+                                    //左斜五个
+                                    function youshang1b(t) {
+                                        return (t.parentNode.childNodes[t.diji - 7]);
+                                    }
+
+                                    function youshang2b(t) {
+                                        return (t.parentNode.childNodes[t.diji - 16]);
+                                    }
+
+                                    function zuoxia1b(t) {
+                                        return (t.parentNode.childNodes[t.diji + 9]);
+                                    }
+
+                                    function zuoxia2b(t) {
+                                        return (t.parentNode.childNodes[t.diji + 18]);
+                                    }
+
+                                    var yyssb = youshang1b(this);
+                                    var zzxxb = zuoxia1b(this);
+                                    this.zxb = yyssb.zxb + zzxxb.zxb + 1;
+                                    if (yyssb.zxb !== 0) {
+                                        yyssb.zxb = this.zxb;
+                                        if (youshang2b(this).zxb !== 0) {
+                                            youshang2b(this).zxb = this.zxb;
+                                        }
+                                    }
+                                    if (zzxxb.zxb !== 0) {
+                                        zzxxb.zxb = this.zxb;
+                                        if (zuoxia2b(this).zxb !== 0) {
+                                            zuoxia2b(this).zxb = this.zxb;
+                                        }
+                                    }
+
+                                    if (this.ahb >= 5 || this.asb >= 5 || this.yxb >= 5 || this.zxb >= 5) {
+                                        alert("白子赢");
+                                        boo1 = false;
+                                    }
+                                }
+                            }
+                          }
+                        }
+                        ;
+                        if (i == 0) {
+                            d.innerHTML = "<span></span>";
+                            if (j == 0) {
+                                d.style.background = "url('game/bg1.gif')";
+                                console.log("设置背景");
+                            } else if (j == 8) {
+                                d.style.background = "url('game/bg4.gif')";
+                            } else {
+                                d.style.background = "url('game/bg7.gif')";
+                            }
+                        }
+                        else if (i == 8) {
+                            d.innerHTML = "<span></span>";
+                            if (j == 0) {
+                                d.style.background = "url('game/bg2.gif')";
+                            } else if (j == 8) {
+                                d.style.background = "url('game/bg6.gif')";
+                            } else {
+                                d.style.background = "url('game/bg8.gif')";
+                            }
+                        }
+                        else {
+                            if (j == 0) {
+                                d.innerHTML = "<span></span>";
+                                d.style.background = "url('game/bg3.gif')";
+                            } else if (j == 8) {
+                                d.innerHTML = "<span></span>";
+                                d.style.background = "url('game/bg5.gif')";
+                            } else {
+                                d.style.background = "url('game/bg.gif')";
+                            }
+                        }
+
+
+                }
+            }
+        }
+    </script>
+</head>
+<body onload="f()">
+    <div id="contents" style="margin: 20px 0 0 100px;width: 900px;height: 900px "></div>
+    <div id="turn" style="width:200px; height: 30px; position: absolute; font-size: 18px; font-weight: bold; top: 20px; left: 160px;">黑子先下</div>
+
+</body>
+</html>
